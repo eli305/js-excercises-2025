@@ -79,8 +79,9 @@
         var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/hp-movies.json"
 
         fetch(requestUrl).then(response => response.json())
-    .then(function(data){
-        console.log("DATA", data);
+            .then(function(data){
+                console.log("DATA", data)
+
 
         console.log("---------------------");
         console.log("PART 1...");
@@ -88,9 +89,9 @@
         console.log("Number of Movies:", data.length);
 
         data.forEach(movie => {
-            console.log("movie: ", movie.title, " year: ", movie.year);
+            console.log("movie: ", movie.Title, " year: ", movie.Year);
         });
-    })
+
 
     
 
@@ -101,7 +102,7 @@
                     const highestRated = data.reduce((highest, movie) =>
                     movie.rating > highest.rating ? movie : highest
                     );
-                    console.log("highest rated movie:", highestRated.title, " rating: ", highestRated.rating);
+                    console.log("highest rated movie:", highestRated.Title, " rating: ", highestRated.Rating);
                 })
                 .catch(err => console.log(err));
 
@@ -119,8 +120,8 @@
 
                         data.forEach(movie => {
                         const option = document.createElement("option");
-                        option.value = movie.id;
-                        option.textContent = movie.title;
+                        option.value = movie.Id;
+                        option.textContent = movie.Title;
                         selectElement.appendChild(option);
                         });
                     })
@@ -132,13 +133,13 @@
                 
                 function updateMovieInfo(data) {
                     const selectedId = document.getElementById("select-movie").value;
-                    const selectedMovie = data.find(movie => movie.id == selectedId);
+                    const selectedMovie = data.find(movie => movie.Id == selectedId);
                     if (selectedMovie) {
-                        document.getElementById("display-title").innerText = selectedMovie.title;
-                        document.getElementById("display-year").innerText = selectedMovie.year;
-                        document.getElementById("display-rating").innerText = selectedMovie.rating;
+                        document.getElementById("display-title").innerText = selectedMovie.Title;
+                        document.getElementById("display-year").innerText = selectedMovie.Year;
+                        document.getElementById("display-rating").innerText = selectedMovie.Rating;
                         document.getElementById("image-container").innerHTML = `
-                        <img src="${selectedMovie.image}" alt="${selectedMovie.title}" style="width: 200px;">
+                        <img src="${selectedMovie['Thumbnail Image URL']}" alt="${selectedMovie.Title}" style="width: 200px;">
                         `;
                     }
                     }
@@ -160,7 +161,9 @@
                         });
 
                         selectElement.addEventListener("change", () => updateMovieInfo(data));
-                    }).catch(err => console.log(err))
+                    })
+                    
+                }).catch(err => console.log(err))
 
     </script>
 </body>
