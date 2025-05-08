@@ -92,11 +92,66 @@
 
 
 
+                // Display the date this data was generated (i.e. "2021-06-08").
+                var dateGenerated = data.properties.updated;
+                console.log("Date:", dateGenerated);
+                document.getElementById("display-date").innerText = dateGenerated;
+
+
+
+                // Display the number of periods of available data (i.e. 14).
+                var periods = data.properties.periods;
+                console.log("periods:", periods.length);
+
+
+                // Use a filtering operation to arrive at a subset of the periods that are daytime only (excluding night-time periods), and store them in a variable called daytimePeriods.
+                var daytimePeriods = periods.filter(function(period) {
+                return !period.name.includes("Night");
+            });
+            console.log("daytime periods:", daytimePeriods.length);
+
+               
+
+
+                // For each daytime period, display a human-readable weather forecast on that date, including: the period name, temperature (and temperature unit), and a short or long forecast.
+                daytimePeriods.forEach(function(period) {
+                console.log("period: " + period.name);
+                console.log("temperature: " + period.temperature + " " + period.temperatureUnit);
+                console.log("forecast: " + period.shortForecast);
+                console.log("--------------------");
+            });
+
+
 
                 console.log("---------------------")
                 console.log("PART 2...")
 
+                //Display the date this data was generated. Use the designated span element.
+                document.getElementById("display-date").innerText = dateGenerated;
 
+                
+                
+                // Display a seven day forecast, using the daytime periods only. Use the designated table element. The table should have four columns ("Period", "Temperature", "Forecast", and "Icon"). There should be a row for each daytime period. Include the period name, temperature (and temperature unit), and a short or long forecast. Also display the weather icon as an image.
+                var forecastTable = document.getElementById("display-forecast");
+            forecastTable.innerHTML = `
+                <tr>
+                    <th>Period</th>
+                    <th>Temperature</th>
+                    <th>Forecast</th>
+                    <th>Icon</th>
+                </tr>
+            `;
+
+            daytimePeriods.forEach(function(period) {
+                var row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${period.name}</td>
+                    <td>${period.temperature} ${period.temperatureUnit}</td>
+                    <td>${period.shortForecast}</td>
+                    <td><img src="${period.icon}" alt="Weather Icon" width="50"></td>
+                `;
+                forecastTable.appendChild(row);
+            });
 
 
             })
