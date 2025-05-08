@@ -61,8 +61,15 @@
 
     <script type="text/javascript">
 
+
         console.log("---------------------")
         console.log("PART 1...")
+
+
+        var celsius = -270;
+        var fahrenheit = (9 / 5) * celsius + 32;
+        console.log("Celsius: " + celsius);
+        console.log("Fahrenheit: " + fahrenheit);
 
 
 
@@ -70,6 +77,15 @@
 
         console.log("---------------------")
         console.log("PART 2...")
+
+        function calculateTemp(tempC) {
+            var tempF = (9 / 5) * tempC + 32;
+            return tempF;
+        }
+
+        var result = calculateTemp(-270);
+        console.log("Celsius: -270");
+        console.log("Fahrenheit: " + result);
 
 
 
@@ -79,6 +95,19 @@
         console.log("---------------------")
         console.log("PART 3...")
 
+        document.getElementById("calculate").onclick = function() {
+            var inputTemp = document.getElementById("input-temp-c").value;
+            var tempValue = parseFloat(inputTemp);
+
+            if (isNaN(tempValue)) {
+                document.getElementById("display-temp-f").innerText = "Invalid input";
+            } else {
+                var result = calculateTemp(tempValue);
+                document.getElementById("display-temp-f").innerText = result.toFixed(2);
+                console.log("Celsius: " + tempValue);
+                console.log("Fahrenheit: " + result);
+            }
+        };
 
 
 
