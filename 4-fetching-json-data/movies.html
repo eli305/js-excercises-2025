@@ -79,15 +79,31 @@
         var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/hp-movies.json"
 
         fetch(requestUrl).then(response => response.json())
-            .then(function(data){
-                console.log("DATA", data)
+    .then(function(data){
+        console.log("DATA", data);
 
+        console.log("---------------------");
+        console.log("PART 1...");
 
-                console.log("---------------------")
-                console.log("PART 1...")
+        console.log("Number of Movies:", data.length);
 
+        data.forEach(movie => {
+            console.log("movie: ", movie.title, " year: ", movie.year);
+        });
+    })
 
+    
 
+                // Perform a sorting operation to identify the movie that has the highest rating. Display the name and rating of that movie.
+                fetch(requestUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const highestRated = data.reduce((highest, movie) =>
+                    movie.rating > highest.rating ? movie : highest
+                    );
+                    console.log("highest rated movie:", highestRated.title, " rating: ", highestRated.rating);
+                })
+                .catch(err => console.log(err));
 
 
 
@@ -95,11 +111,56 @@
                 console.log("PART 2...")
 
 
+                // See the provided a movie selector dropdown menu (i.e the designated select element). Loop through the movies and dynamically create a new option element for each movie. Use the movie's identifier as the option value, and the movie's title as the option text.
+                fetch(requestUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const selectElement = document.getElementById("select-movie");
+
+                        data.forEach(movie => {
+                        const option = document.createElement("option");
+                        option.value = movie.id;
+                        option.textContent = movie.title;
+                        selectElement.appendChild(option);
+                        });
+                    })
+                    .catch(err => console.log(err));
+
+
+                // Create a function called updateMovieInfo. It should identify what movie is currently selected from the dropdown menu, then lookup the corresponding movie information using a find operation, and finally display information about that movie in the designated areas below. Specifically it should display the movie title, year, rating, and an image of the movie poster.
+
+                
+                function updateMovieInfo(data) {
+                    const selectedId = document.getElementById("select-movie").value;
+                    const selectedMovie = data.find(movie => movie.id == selectedId);
+                    if (selectedMovie) {
+                        document.getElementById("display-title").innerText = selectedMovie.title;
+                        document.getElementById("display-year").innerText = selectedMovie.year;
+                        document.getElementById("display-rating").innerText = selectedMovie.rating;
+                        document.getElementById("image-container").innerHTML = `
+                        <img src="${selectedMovie.image}" alt="${selectedMovie.title}" style="width: 200px;">
+                        `;
+                    }
+                    }
 
 
 
-            })
-            .catch(err => console.log(err))
+
+                // Add an event listener to the dropdown, such that when a new option is selected, it will invoke the updateMovieInfo function. As a result, you should be able to select different movies from the dropdown to see the corresponding info on the page.
+
+                fetch(requestUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const selectElement = document.getElementById("select-movie");
+                        data.forEach(movie => {
+                        const option = document.createElement("option");
+                        option.value = movie.id;
+                        option.textContent = movie.title;
+                        selectElement.appendChild(option);
+                        });
+
+                        selectElement.addEventListener("change", () => updateMovieInfo(data));
+                    }).catch(err => console.log(err))
 
     </script>
 </body>
