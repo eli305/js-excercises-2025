@@ -63,12 +63,49 @@
         console.log("PART 1...")
 
 
+// Display the total number of products (i.e. 3).
 
+console.log("Total Number of Products:", products.length);
+
+// Loop through each product and display their name and price, each on a new line.
+products.forEach(function(product) {
+    console.log(product.name + ": $" + product.price);
+});
+
+// Use a filter operation to arrive at an array containing just the products that have a price less than $50, and store them in a new variable called matchingProducts.
+var matchingProducts = products.filter(function(product) {
+    return product.price < 50;
+});
+console.log("Matching Products:", matchingProducts);
+
+
+// Display the total number of matching products from Question C (i.e. 2).
+
+console.log("Total Number of Matching Products:", matchingProducts.length);
 
 
 
         console.log("---------------------")
         console.log("PART 2...")
+
+var displayDiv = document.getElementById("display-products");
+
+products.forEach(function(product) {
+    var productDiv = document.createElement("div");
+    productDiv.style.border = "1px solid black";
+    productDiv.style.padding = "10px";
+    productDiv.style.marginBottom = "10px";
+
+    productDiv.innerHTML = `
+        <p>Name: ${product.name}</p>
+        <p>Description: ${product.description}</p>
+        <p>Price:$ ${product.price.toFixed(2)}</p>
+        <img src="${product.imageURL}" alt="${product.name}" style="width: 100%; max-width: 360px;">
+        <hr>
+    `;
+
+    displayDiv.appendChild(productDiv);
+});
 
 
 
