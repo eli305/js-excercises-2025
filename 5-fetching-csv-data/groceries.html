@@ -83,18 +83,74 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            //Fetch the grocery product data using the provided URL.
+            // Display the number of products (i.e. 20).
+            console.log("number of products:", products.length);
+
+            // Loop through the products and display the name and price of each. Format the prices as currency using a dollar sign and rounding to two decimal places. HINT: you may need to convert the prices to floats before formatting.
+            products.forEach(function(product) {
+            console.log("Product: ", product.name, " Price: ", formatUSD(product.price));
+            });
+
+            // Arrive at a unique list of department names, and store them in a variable called departments. HINT: loop through the products, and conditionally add that product's department name to the departments array, only if it is not already included in the array.
+            var departments = [];
+            products.forEach(function(product) {
+                if (!departments.includes(product.department)) {
+                    departments.push(product.department);
+                }
+            });
 
 
+            // Display the number of unique departments (i.e. 10).
+            console.log("Number of unique departments:", departments.length);
+
+
+            // Loop through the array of unique departments and display the name of each, formatted as all upper-case.
+            departments.forEach(function(dept) {
+                console.log(dept.toUpperCase());
+            });
+
+
+            // Use a filter operation to identify the products that have a department name of "beverages", and store them in a variable called beverages.
+            var beverages = products.filter(function(product) {
+                return product.department === "beverages";
+             });
+            console.log("beverage products: ", beverages.length);
+
+            // Display the number of beverage products (i.e. 5).
+            var total = beverages.reduce(function(sum, product) {
+            return sum + parseFloat(product.price);
+            }, 0);
+            
+
+            // Display the average price of all the beverage products, formatted as as currency using a dollar sign and rounding to two decimal places (i.e. "$3.04").
+            var average = total / beverages.length;
+            console.log("average price of all the beverage products: ", formatUSD(average));
 
 
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            // Sort the products by name in ascending order.
+            var sortedproducts = products.sort(function(a, b) {
+            return a.name.localeCompare(b.name);
+            });
 
 
+            // Loop through all the sorted products and display the name and price of each, in a separate list item. Use the designated ul element below. Format the prices as currency using a dollar sign and rounding to two decimal places.
+
+            function formatUSD(price) {
+                return `$${parseFloat(price).toFixed(2)}`;
+            }
 
 
+            var display = document.getElementById("display-groceries");
+            sortedproducts.forEach(function(product) {
+                var listItem = document.createElement("li");
+                listItem.textContent = product.name + ": " + formatUSD(product.price);
+                display.appendChild(listItem);
+        });
 
 
 
