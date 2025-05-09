@@ -90,16 +90,36 @@
 
         // FUNCTION DEFINITION
         function lookupCompany() {
-            var symbol = inputSymbol.value
+            var inputSymbol = document.getElementById("input-symbol");
+            var symbol = inputSymbol.value.trim().toUpperCase();
             console.log("SYMBOL:", symbol)
 
             var requestUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${apiKey}`
             d3.json(requestUrl).then(function(data) {
+                
+                
+                
                 console.log("RESPONSE:", data)
+
+
 
                 console.log("---------------------")
                 console.log("PART 1...")
 
+
+        var companyName = data.Name || "N/A";
+        var description = data.Description || "N/A";
+        var website = data.OfficialSite || "N/A";
+
+
+        console.log("Name:", companyName);
+        console.log("Description:", description);
+        console.log("Website:", website);
+
+        document.getElementById("display-name").innerText = companyName;
+        document.getElementById("display-description").innerText = description;
+        document.getElementById("display-link").innerText = website;
+        document.getElementById("display-link").href = website;
 
 
 
@@ -109,6 +129,8 @@
                 console.log("PART 2...")
 
 
+// Revisit the lookupCompany function from Part 1. It should also:
+
 
 
 
@@ -117,11 +139,15 @@
             })
         }
 
+
+// Add an event listener to also invoke the function whenever the "Lookup" button is clicked.
+    document.getElementById("lookup").addEventListener("click", lookupCompany);
+
         // FUNCTION INVOCATIONS
         // invoke function when the page loads:
-        //lookupCompany()
+        lookupCompany()
         // invoke function when button is clicked:
-        //lookupButton.addEventListener("click", lookupCompany, false)
+        document.getElementById("lookup").addEventListener("click", lookupCompany);
 
     </script>
 </body>
