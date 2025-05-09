@@ -93,6 +93,44 @@
             console.log("PART 1...")
 
 
+// Fetch market status data from the API.
+
+
+// Display the number of markets.
+var markets = data.markets;
+console.log("Number of Markets:", markets.length);
+
+
+// Filter the markets to identify only those that have a market type of "Equity", and store them in a variable called equityMarkets.
+
+var equityMarkets = markets.filter(function(market) {
+    return market.market_type === "Equity";
+});
+console.log("number of equity markets:", equityMarkets.length);
+
+
+// Loop through the equity markets and display the market type and region of each.
+equityMarkets.forEach(function(market) {
+    console.log("Market Type:", market.market_type, ", Region:", market.region);
+});
+
+// Use a find operation to identify the equity market that has a region of "United States", and store it in a variable called market.
+var US_market = equityMarkets.find(function(market) {
+    return market.region === "United States";
+});
+
+// Display information about the US market, including: the market type, the primary exchanges, the local open and close time, and the current market status. Format the market status using all capital letters.
+if (US_market) {
+    console.log("US Market Information:");
+    console.log("Region:", US_market.region);
+    console.log("Market Type:", US_market.market_type);
+    console.log("Primary Exchanges:", US_market.primary_exchanges);
+    console.log("Local Open:", US_market.local_open);
+    console.log("Local Close:", US_market.local_close);
+    console.log("Current Status:", US_market.current_status);
+} else {
+    console.error("Error");
+}
 
 
 
@@ -100,6 +138,17 @@
             console.log("PART 2...")
 
 
+//Write JavaScript code to answer the questions below. Display the answers on the page in the designated areas.
+
+
+// Using the designated span elements below, display information about the US market, including it's region, market type, primary exchanges, local open and close times, and current status.
+
+document.getElementById("display-region").innerText = US_market ? US_market.region : "N/A";
+document.getElementById("display-type").innerText = US_market ? US_market.market_type : "N/A";
+document.getElementById("display-exchanges").innerText = US_market ? US_market.primary_exchanges : "N/A";
+document.getElementById("display-open").innerText = US_market ? US_market.local_open : "N/A";
+document.getElementById("display-close").innerText = US_market ? US_market.local_close : "N/A";
+document.getElementById("display-status").innerText = US_market ? US_market.current_status.toUpperCase() : "N/A";
 
 
         }).catch(function(error) {
